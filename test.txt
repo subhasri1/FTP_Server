@@ -1,0 +1,2 @@
+Hello , FTP server is created.
+Welcome to the Git.
