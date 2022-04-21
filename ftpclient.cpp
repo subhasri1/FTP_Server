@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-
-       sockfd=socket(AF_INET,SOCK_STREAM,0);
-       serv_addr.sin_family=AF_INET;
-       serv_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
-       serv_addr.sin_port=htons(SERV_TCP_PORT);
-       connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
-      
-=======
 #include<iostream>
 #include<stdio.h>
 #include<sys/types.h>
@@ -25,6 +16,9 @@ int main(int arg,char*argv[])
 	struct sockaddr_in serv_addr;
 	struct hostent*server;
 	char send[MAX],recvline[MAX],s[MAX],name[MAX];
+	sockfd=socket(AF_INET,SOCK_STREAM,0);
+        serv_addr.sin_family=AF_INET;
+        serv_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
+        serv_addr.sin_port=htons(SERV_TCP_PORT);
+        connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
 }
->>>>>>> 500b56050d4b6e45454ab0929bc2eeb2dd464197
-
