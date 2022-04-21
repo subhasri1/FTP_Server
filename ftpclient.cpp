@@ -3,7 +3,10 @@
 #include<sys/types.h>
 #include<sys/socket.h>
 #include<netinet/in.h>
+<<<<<<< HEAD
 #include<arpa/inet.h>
+=======
+>>>>>>> 527f7853883dba2ecef044da42317245ee93c238
 #include<netdb.h>
 #include<stdlib.h>
 #include<string.h>
@@ -18,6 +21,7 @@ int main(int arg,char*argv[])
 	struct hostent*server;
 	char send[MAX],recvline[MAX],s[MAX],name[MAX];
 	sockfd=socket(AF_INET,SOCK_STREAM,0);
+<<<<<<< HEAD
 	serv_addr.sin_family=AF_INET;
 	serv_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
 	serv_addr.sin_port=htons(SERV_TCP_PORT);
@@ -38,3 +42,10 @@ int main(int arg,char*argv[])
 }
 
 
+=======
+        serv_addr.sin_family=AF_INET;
+        serv_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
+        serv_addr.sin_port=htons(SERV_TCP_PORT);
+        connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+}
+>>>>>>> 527f7853883dba2ecef044da42317245ee93c238
