@@ -40,6 +40,12 @@ int main(int afg, char *argv[])
        {
 		perror("Error in opening file");
 		
+       
+       }
+       while(fgets(buff,4096,f1)!=NULL)
+       {
+	       write(newsockfd, buff,MAX);
+	       cout<<"\n";
        }
        fclose(f1);
        cout<<"\nFile Transferred\n";
