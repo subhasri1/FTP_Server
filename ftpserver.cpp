@@ -26,15 +26,16 @@ int main(int afg, char *argv[])
        serv_addr.sin_family=AF_INET;
        serv_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
        serv_addr.sin_port=htons(SERV_TCP_PORT);
-       cout<<"\nBinded";
+       cout<<"\n socket with  the local server.......";
        bind(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
-       cout<<"\nListening...";
+       cout<<"\naccept client connection request...";
        listen(sockfd, 5);
        clength=sizeof(cli_addr);
        newsockfd=accept(sockfd,(struct sockaddr*)&cli_addr,&clength);
        close(sockfd);
        read(newsockfd,&str,MAX);
-       cout<<"\nClient message\n File Name :"<<str<<endl;
+       cout<<"\nClient message inside \n File Name :"<<str<<endl;
+
        f1=fopen(str,"r");
        if(f1==NULL)
        {
