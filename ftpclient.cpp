@@ -47,5 +47,15 @@ int main(int arg,char*argv[])
         serv_addr.sin_addr.s_addr=inet_addr("127.0.0.1");
         serv_addr.sin_port=htons(SERV_TCP_PORT);
         connect(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+	cout<<"\nEnter the source file name : \n";
+	       cin>>send;
+	              write(sockfd,send,MAX);
+		             while((n=read(sockfd,recvline,MAX))!=0)
+	       {
+		                 cout<<recvline;
+				        }
+       close(sockfd);
+              return 0;
+	      }
 }
 >>>>>>> 527f7853883dba2ecef044da42317245ee93c238
