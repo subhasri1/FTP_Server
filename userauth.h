@@ -1,22 +1,22 @@
-int authentication(string userName,string userPassword)
+void authen()
 {
-	map<string,string> m = {{"kailash","chandra"},{"lash","chand"},{"Guru","dra"}};
+	map<string,string> m = {{"kailash","chandra"},{"lash","chand"},{"Guru","dra"},{"anonymous",""}};
 	int loginAttempt = 0;
 	bool uservalid=false;
-    	map<string,string> :: iterator it;
+   	string userName,userPassword;
+	map<string,string> :: iterator it;
 	do{
-	cout<<"Please enter your user name: ";
-    	cin>>userName;
-    	cout<<"Please enter your user password: ";
-    	cin>>userPassword;
-    
+		  cout<<"Enter userName:";
+          	  cin>>userName;
+               	  cout<<"Enter userPassword:";
+          	  cin>>userPassword;
 	for(it=m.begin();it!=m.end();++it)
     	{	if(userName ==  it->first && userPassword == it->second)
         	{
             	cout<<"Welcome "<<userName<<"\n";
-				uservalid=true;
-        		break;
-			}
+		uservalid=true;
+        	break;
+		}
 	}
 	if(!uservalid)
 	{
@@ -28,7 +28,9 @@ int authentication(string userName,string userPassword)
 			cout<<"Attempts completed!!!"<<endl;
 		}
 	}
+	
 	}while(!uservalid&&loginAttempt<3);
-    	//cout << "Thank you for logging in.\n";
+
+    //cout << "Thank you for logging in.\n";
 	
 }
