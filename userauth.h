@@ -3,15 +3,15 @@ int authentication(string userName,string userPassword)
 	map<string,string> m = {{"kailash","chandra"},{"lash","chand"},{"Guru","dra"}};
 	int loginAttempt = 0;
 	bool uservalid=false;
-    map<string,string> :: iterator it;
+    	map<string,string> :: iterator it;
 	do{
 	cout<<"Please enter your user name: ";
-    cin>>userName;
-    cout<<"Please enter your user password: ";
-    cin>>userPassword;
-      
+    	cin>>userName;
+    	cout<<"Please enter your user password: ";
+    	cin>>userPassword;
+    
 	for(it=m.begin();it!=m.end();++it)
-    {	if(userName ==  it->first && userPassword == it->second)
+    	{	if(userName ==  it->first && userPassword == it->second)
         	{
             	cout<<"Welcome "<<userName<<"\n";
 				uservalid=true;
@@ -30,6 +30,6 @@ int authentication(string userName,string userPassword)
 	}
 	}while(!uservalid&&loginAttempt<3);
 
-    //cout << "Thank you for logging in.\n";
+    	//cout << "Thank you for logging in.\n";
 	
 }
