@@ -29,7 +29,6 @@ int authentication(string userName,string userPassword)
 		}
 	}
 	}while(!uservalid&&loginAttempt<3);
-
     	//cout << "Thank you for logging in.\n";
 	
 }
