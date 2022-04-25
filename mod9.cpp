@@ -1,6 +1,16 @@
 #include<iostream>
 #include<direct.h>
 #include<unistd.h>
+#include<fstream>
+#include<iostream>
+#include<stdio.h>
+#include<arpa/inet.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<netdb.h>
+#include<stdlib.h>
+#include<string.h>
 using namespace std;
 while(fgets(sendline, MAXLINE,stdin)!=NULL)
 {
