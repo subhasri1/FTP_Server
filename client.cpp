@@ -6,43 +6,23 @@
 #include<unistd.h>
 #include "include/userauth.h"
 using namespace std;
-void authen()
-{
-	map<string,string> m = {{"kailash","chandra"},{"lash","chand"},{"Guru","dra"},{"anonymous",""}};
-	int loginAttempt = 0;
-	bool uservalid=false;
-   	string userName,userPassword;
-	map<string,string> :: iterator it;
-	do{
-		  cout<<"Enter userName:";
-          	  cin>>userName;
-               	  cout<<"Enter userPassword:";
-          	  cin>>userPassword;
-	for(it=m.begin();it!=m.end();++it)
-    	{	if(userName ==  it->first && userPassword == it->second)
-        	{
-            	cout<<"Welcome "<<userName<<"\n";
-		uservalid=true;
-        	break;
-		}
-	}
-	if(!uservalid)
+void transact_with_serv(int sock)
+{	
+	char buf[100];
+	int n;
+	while(1)
 	{
-		loginAttempt++;
-		cout<<(3-loginAttempt)<<" attempts left.... "<<endl;
-    		cout << "Invalid login attempt. Please try again.\n";
-		if(loginAttempt==3)
-		{
-			cout<<"Attempts completed!!!"<<endl;
-		}
-	}
+	cout<<"ftp>";
+	fgets(buf,100,stdin);
+	send(sock,buf,strlen(buf),0);
+	n=recv(sock,buf,sizeof(buf),0);
 	
-	}while(!uservalid&&loginAttempt<3);
 
-    //cout << "Thank you for logging in.\n";
+	write(1,buf,n);
+
 	
+	}
 }
-	
 
 int main(int argc,char* argv[])
 {
@@ -64,23 +44,18 @@ int main(int argc,char* argv[])
 	if(argc==1)
 	{
 		cout<<"Welcome Anonymous"<<endl;
-		exit(1);
+		cout<<"ftp>";
+		//exit(1);
 	}
 	else if(argc==2)
 	{
-	cout<<"ftp>";
-	
-	authen();
 
-		
-	char buf[100];
-	cout<<"ftp>";
-	fgets(buf,100,stdin);
-	write(sockfd,buf,100);
 	
-	read(sockfd,buf,100);
+	
+		cout<<"ftp>";
+		authen();
+	transact_with_serv(sockfd);
 
-	cout<<"from server "<<buf<<endl;
 
 	}
 	else
@@ -90,3 +65,4 @@ int main(int argc,char* argv[])
 	}
 	close(sockfd);
 }
+
