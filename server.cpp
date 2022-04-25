@@ -51,6 +51,17 @@ static void skeleton_daemon()
 	}
 	openlog("firstdaemon",LOG_PID,LOG_DAEMON);
 }
+void transact_with_client(int sock)
+{
+
+		char buf[100];
+		int n;
+		memset(buf,'\0',sizeof(buf));
+		while((n=recv(sock,buf,sizeof(buf),0))>0)
+			send(sock,buf,n,0);
+	
+
+}
 int main()
 {
 	skeleton_daemon();
@@ -86,16 +97,8 @@ int main()
 			perror("Accept error");
 			exit(1);
 		}
-		
-		char buf[10];
-		memset(buf,'\0',sizeof(buf));
+		transact_with_client(sockfd);
 
-		read(clifd,buf,10);
-
-		cout<<"From client "<<buf<<endl;
-		
-		write(clifd,buf,10);
-	
 	}
 	
 	if(close(sockfd)==-1)
