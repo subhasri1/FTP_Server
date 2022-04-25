@@ -8,7 +8,6 @@
 using namespace std;
 void authen()
 {
-{
 	map<string,string> m = {{"kailash","chandra"},{"lash","chand"},{"Guru","dra"},{"anonymous",""}};
 	int loginAttempt = 0;
 	bool uservalid=false;
