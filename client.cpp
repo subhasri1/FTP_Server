@@ -3,27 +3,22 @@
 #include<arpa/inet.h>
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include<unistd.h>
+#include<signal.h>
 #include "include/userauth.h"
+#define MAXLINE 4096
 using namespace std;
-void transact_with_serv(int sock)
-{	
-	char buf[100];
-	int n;
-	while(1)
-	{
-	cout<<"ftp>";
-	fgets(buf,100,stdin);
-	send(sock,buf,strlen(buf),0);
-	n=recv(sock,buf,sizeof(buf),0);
-	
 
-	write(1,buf,n);
-
-	
-	}
+//to avoid zombie process
+void sighandler(int signum)
+{
+	cout << strsignal(signum) << endl;
+	wait(NULL);
 }
 
+
+void transact_with_serv(int);
 int main(int argc,char* argv[])
 {
 	int sockfd=socket(AF_INET,SOCK_STREAM,0);
@@ -41,8 +36,10 @@ int main(int argc,char* argv[])
 		perror("Error connection");
 		exit(1);
 	}
+	//cout<<"Connected successfully!!"<<endl;
 	if(argc==1)
 	{
+		cout<<"Connected successfully"<<endl;
 		cout<<"Welcome Anonymous"<<endl;
 		cout<<"ftp>";
 		//exit(1);
@@ -50,19 +47,59 @@ int main(int argc,char* argv[])
 	else if(argc==2)
 	{
 
-	
-	
-		cout<<"ftp>";
-		authen();
-	transact_with_serv(sockfd);
-
-
+		string s(argv[1]);
+		if(isuser(s))
+		{
+			cout<<"ftp>";
+			transact_with_serv(sockfd);
+		}
+		else
+		{
+			cout<<"Invalid details";
+			exit(1);
+		}
+		
 	}
+
 	else
 	{
 		cout<<"Usage: ./client or ./client username "<<endl;
 		exit(1);
 	}
+
+
+	
 	close(sockfd);
 }
+void transact_with_serv(int sock)
+{	
+	//string user,pass;
+	//char sendline[MAXLINE],recvline[MAXLINE];
+	//char ch=',';
+	char buf[100];
+	int n;
+	
+	while(1)
+	{
+		//authen();
+	/*cout<<"Enter username:";
+	cin>>user;
+	cout<<"Enter password:";
+	cin>>pass;
+	*/
+	
+	/*strcat(buf,user.c_str());
+	strcat(buf,",");
+	strcat(buf,pass.c_str());
+	*/
+	send(sock,buf,strlen(buf),0);
+	cout<<"Message sent"<<endl;
+	n=recv(sock,buf,sizeof(buf),0);
+		
+	//write(1,buf,n);
+
+	cout<<"ftp>";	
+	}
+}
+
 

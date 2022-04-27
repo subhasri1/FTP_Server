@@ -2,6 +2,7 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<string.h>
+#include<fstream>
 #include<stdio.h>
 #include<unistd.h>
 #include<stdlib.h>
@@ -10,59 +11,15 @@
 #include<sys/types.h>
 #include<syslog.h>
 #include<fcntl.h>
+#include<signal.h>
+#include<sys/wait.h>
+#include "include/userauth.h"
 using namespace std;
-static void skeleton_daemon()
-{
-	pid_t pid,sid;
-	pid=fork();
-	if(pid<0)
-	{
-		exit(EXIT_FAILURE);
-	}
-	if(pid>0)
-	{
-		exit(EXIT_SUCCESS);
-	}
-	sid=setsid();
-	if(sid<0)
-	{
-		exit(EXIT_FAILURE);
-	}
-	signal(SIGCHLD,SIG_IGN);
-	signal(SIGHUP,SIG_IGN);
+void transact_with_client(int);
 
-	pid=fork();
-	if(pid<0)
-	{
-		exit(EXIT_FAILURE);
-	}
-	if(pid>0)
-	{
-		exit(EXIT_SUCCESS);
-	}
 
-	umask(0);
 
-	chdir("/");
-	int x;
-	for(x=sysconf(_SC_OPEN_MAX);x>=0;x--)
-	{
-		close(x);
-	}
-	openlog("firstdaemon",LOG_PID,LOG_DAEMON);
-}
-void transact_with_client(int sock)
-{
-
-		char buf[100];
-		int n;
-		memset(buf,'\0',sizeof(buf));
-		while((n=recv(sock,buf,sizeof(buf),0))>0)
-			send(sock,buf,n,0);
-	
-
-}
-int main()
+int main(int args,char* argv[])
 {
 	skeleton_daemon();
 
@@ -97,6 +54,14 @@ int main()
 			perror("Accept error");
 			exit(1);
 		}
+		else
+		{
+	 	//handshaking with client
+	 	char msg[]="Successfull Connection established from the Server\n";
+	 	
+	 	write(clifd,&msg,sizeof(msg));
+	 	}
+
 		transact_with_client(sockfd);
 
 	}
@@ -116,3 +81,53 @@ int main()
 	closelog();
 	//return EXIT_STATUS;
 }
+
+void transact_with_client(int sock)
+{
+//		ofstream fout;
+//		fout.open("data.txt");
+		char user[30];
+		char buf[100];
+		char pass[30];
+		int n;
+		memset(buf,'\0',sizeof(buf));
+		n=recv(sock,buf,sizeof(user),0);
+		
+		strcpy(user,buf);
+		cout<<user;
+		/*
+		if(authen(user,pass))
+		{
+			n=recv(sock,pass,sizeof(pass),0);
+			strcpy(pass,buf);	
+		}
+		//memset(buf,'\0',sizeof(buf));
+		
+		
+		if()
+			
+			int i=0;
+			int j;
+			while(buf[i]!=',')
+			{	user+=buf[i];
+				i++;
+				j=i;
+			}
+			while(buf[j]<strlen(buf))
+			{
+				pass+=buf[j];
+				j++;
+			}
+
+
+			write(1,buf,n);
+			//send(sock,user.c_str(),n,0);
+			//send(sock,pass.c_str(),n,0);
+			send(sock,buf,n,0);
+			//fout.close();	
+		
+*/
+}
+
+
+
