@@ -33,12 +33,12 @@ void authen()
 		if(loginAttempt==3)
 		{
 			cout<<"Attempts completed!!!"<<endl;
-			flag=0;
+			//flag=0;
 		}
 	}
 	
 	}while(!uservalid&&loginAttempt<3);
-	return flag;
+	//return flag;
     //cout << "Thank you for logging in.\n";
 	
 }
